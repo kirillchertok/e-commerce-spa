@@ -3,7 +3,7 @@ import { type Firestore, getFirestore } from 'firebase/firestore';
 
 import { env } from './env';
 
-let firebaseApp: FirebaseApp | null = null;
+let firebaseApp: FirebaseApp | undefined = undefined;
 let db: Firestore | null = null;
 
 if (env.isFirebaseConfigured) {
