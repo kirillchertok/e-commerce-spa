@@ -1,0 +1,37 @@
+:root {
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 18px;
+}
+
+@theme inline {
+    --font-serif: 'DM Serif Text', serif;
+    --font-sans: 'DM Sans', sans-serif;
+
+    --font-weight-xs: 300;
+    --font-weight-sm: 400;
+    --font-weight-md: 600;
+    --font-weight-lg: 700;
+
+    --text-sm: 0.75rem;
+    --text-md: 1rem;
+    --text-lg: 1.25rem;
+    --text-xl: 1.5rem;
+    --text-2xl: 2rem;
+
+    --radius-xs: 1px;
+    --radius-sm: 3px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 3rem;
+
+    --border-width-sm: 2px;
+    --border-width-md: 3px;
+    --border-width-lg: 4px;
+}
