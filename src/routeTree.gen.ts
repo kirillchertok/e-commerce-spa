@@ -9,18 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
+import { Route as ShopRouteImport } from './routes/_shop'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ShopIndexRouteImport } from './routes/_shop/index'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
   path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopRoute = ShopRouteImport.update({
+  id: '/_shop',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -28,51 +28,57 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShopIndexRoute = ShopIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ShopRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/': typeof ShopIndexRoute
   '/auth': typeof AuthRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth': typeof AuthRoute
+  '/': typeof ShopIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/_shop': typeof ShopRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_shop/': typeof ShopIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$' | '/auth'
+  fullPaths: '/$' | '/' | '/auth'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$' | '/auth'
-  id: '__root__' | '/' | '/$' | '/auth'
+  to: '/$' | '/auth' | '/'
+  id: '__root__' | '/$' | '/_shop' | '/auth' | '/_shop/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  ShopRoute: typeof ShopRouteWithChildren
   AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/$': {
       id: '/$'
       path: '/$'
       fullPath: '/$'
       preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_shop': {
+      id: '/_shop'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -82,12 +88,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shop/': {
+      id: '/_shop/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof ShopIndexRouteImport
+      parentRoute: typeof ShopRoute
+    }
   }
 }
 
+interface ShopRouteChildren {
+  ShopIndexRoute: typeof ShopIndexRoute
+}
+
+const ShopRouteChildren: ShopRouteChildren = {
+  ShopIndexRoute: ShopIndexRoute,
+}
+
+const ShopRouteWithChildren = ShopRoute._addFileChildren(ShopRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  ShopRoute: ShopRouteWithChildren,
   AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
