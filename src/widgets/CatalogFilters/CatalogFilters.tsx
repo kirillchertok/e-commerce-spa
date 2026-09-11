@@ -59,7 +59,6 @@ export const CatalogFilters = ({ className }: { className?: string }) => {
     const createChipRemoveHandler = useCallback(
         (key: keyof CatalogSearchParams) => {
             return () => {
-                // Special handling for category chips - need to clear both category and subCategory
                 if (key === 'category') {
                     navigate({
                         to: '/',

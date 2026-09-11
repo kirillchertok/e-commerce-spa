@@ -24,7 +24,6 @@ export type SortOrder = 'price_asc' | 'price_desc' | null;
 export type SortParam = 'asc' | 'desc';
 
 export interface ProductFilters {
-    // URL/Routing parameters
     gender?: GenderCategory;
     category?: string;
     subCategory?: string;
@@ -36,8 +35,6 @@ export interface ProductFilters {
     sale?: boolean;
     search?: string;
     sort?: SortParam;
-
-    // API parameters (optional)
     subSubCategory?: string;
     priceRange?: [number, number];
 }

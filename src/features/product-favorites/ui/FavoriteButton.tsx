@@ -10,10 +10,6 @@ interface FavoriteButtonProps {
     className?: string;
 }
 
-/**
- * Redux-connected wrapper around FavoriteButtonUI
- * Handles favorites state management and toggle logic
- */
 export const FavoriteButton = ({ productId, className }: FavoriteButtonProps) => {
     const dispatch = useAppDispatch();
     const isFavorite = useAppSelector(state => state.favorites.favoriteIds.includes(productId));

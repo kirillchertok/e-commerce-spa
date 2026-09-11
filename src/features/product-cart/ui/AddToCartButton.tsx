@@ -10,10 +10,6 @@ interface AddToCartButtonProps {
     className?: string;
 }
 
-/**
- * Redux-connected wrapper around AddToCartButtonUI
- * Handles cart state management and item toggle logic
- */
 export const AddToCartButton = ({ productId, className }: AddToCartButtonProps) => {
     const dispatch = useAppDispatch();
     const inCart = useAppSelector(state => state.cart.items.some(item => item.id === productId));

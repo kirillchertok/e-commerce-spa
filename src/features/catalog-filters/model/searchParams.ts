@@ -1,6 +1,5 @@
 import type { ProductFilters } from '@/entities/product/types/product.types';
 
-// Re-export from lib for backward compatibility
 export {
     type ArrayFilterKey,
     parseProductFilters as parseCatalogSearch,
@@ -13,6 +12,5 @@ export {
     withToggledValue,
 } from '../lib/searchParamsUtils';
 
-// CatalogSearchParams is an alias for ProductFilters for backward compatibility
 export type CatalogSearchParams = ProductFilters;
 

@@ -7,15 +7,9 @@ export type SortParam = typeof SORT_ASC | typeof SORT_DESC;
 
 export type ArrayFilterKey = 'colors' | 'sizes' | 'brands' | 'conditions' | 'shops';
 
-/**
- * Helper to parse a value as a string
- */
 const asString = (value: unknown): string | undefined =>
     typeof value === 'string' && value.length > 0 ? value : undefined;
 
-/**
- * Helper to parse a value as a string array
- */
 const asStringArray = (value: unknown): string[] | undefined => {
     const list = Array.isArray(value)
         ? value.filter((item): item is string => typeof item === 'string')
@@ -26,9 +20,6 @@ const asStringArray = (value: unknown): string[] | undefined => {
     return list.length > 0 ? list : undefined;
 };
 
-/**
- * Parse URL search parameters into ProductFilters object
- */
 export const parseProductFilters = (search: Record<string, unknown>): ProductFilters => {
     const gender = asString(search.gender);
     const sort = asString(search.sort);
@@ -48,9 +39,6 @@ export const parseProductFilters = (search: Record<string, unknown>): ProductFil
     };
 };
 
-/**
- * Serialize ProductFilters back to URL search parameters
- */
 export const serializeProductFilters = (
     filters: ProductFilters
 ): Record<string, string | string[] | boolean> => {
@@ -71,9 +59,6 @@ export const serializeProductFilters = (
     return result;
 };
 
-/**
- * Toggle a value in an array (add if not present, remove if present)
- */
 export const withToggledValue = (
     list: string[] | undefined,
     value: string
@@ -86,9 +71,6 @@ export const withToggledValue = (
     return next.length > 0 ? next : undefined;
 };
 
-/**
- * Toggle a value in ProductFilters object
- */
 export const withToggledFilterValue = (
     filters: ProductFilters,
     key: ArrayFilterKey,
