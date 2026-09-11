@@ -4,6 +4,8 @@ import { cn } from '@/shared/lib/cn';
 
 import { INPUT_SIZE, INPUT_STYLE, type InputVariants, inputVariants } from './cva';
 
+export { INPUT_SIZE, INPUT_STYLE };
+
 interface InputProps extends Omit<React.ComponentProps<'input'>, 'size'>, InputVariants {
     icon?: React.ReactNode;
 }
@@ -39,4 +41,3 @@ function Input({
 }
 
 export { Input };
-
