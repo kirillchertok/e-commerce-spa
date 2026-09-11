@@ -5,6 +5,8 @@ import { cn } from '@/shared/lib/cn';
 
 import { BUTTON_SIZE, BUTTON_STYLE, type ButtonVariants, buttonVariants } from './cva';
 
+export { BUTTON_SIZE, BUTTON_STYLE };
+
 interface ButtonProps extends React.ComponentProps<'button'>, ButtonVariants {
     asChild?: boolean;
 }
@@ -30,4 +32,3 @@ function Button({
 }
 
 export { Button };
-

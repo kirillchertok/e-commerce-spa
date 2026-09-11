@@ -3,6 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 export const INPUT_STYLE = {
     FIRST: 'first',
     SECOND: 'second',
+    CATALOG: 'catalog',
 } as const;
 
 export const INPUT_SIZE = {
@@ -19,6 +20,8 @@ export const inputVariants = cva(
             variant: {
                 [INPUT_STYLE.FIRST]: 'bg-gemma',
                 [INPUT_STYLE.SECOND]: 'bg-white-transperant',
+                [INPUT_STYLE.CATALOG]:
+                    'bg-white text-dark-charcoal border border-matte-steel rounded-full h-auto py-sm text-md placeholder:text-matte-steel focus:border-soft-red',
             },
 
             size: {

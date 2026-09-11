@@ -8,6 +8,21 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+/**
+ * Architecture Rules (Feature-Sliced Design)
+ *
+ * Dependency direction: shared → entities → features → widgets → pages → app/routes
+ *
+ * Read ARCHITECTURE.md for detailed rules and examples
+ *
+ * Key principles:
+ * - entities CANNOT import from features/widgets/pages/app
+ * - features CANNOT import from widgets/pages/app
+ * - shared CANNOT import from any application layer
+ * - Use index.ts for public API (barrel exports)
+ * - Keep components small: if < 100 lines and used only in parent, keep in same file
+ */
+
 export default tseslint.config(
     { ignores: ['dist', 'src/routeTree.gen.ts'] },
     js.configs.recommended,
