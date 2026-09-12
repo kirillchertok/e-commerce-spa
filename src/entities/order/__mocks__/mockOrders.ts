@@ -1,0 +1,115 @@
+import type { Order } from '../types/order.types';
+
+export const mockOrders: Order[] = [
+    {
+        id: 'order-1',
+        status: 'reserved',
+        shop: {
+            name: 'ReStyle Hub',
+            location: '23A Gran Via',
+            workHours: 'MO - FR: 9AM - 8PM',
+        },
+        reservedTime: {
+            from: 'WED 14.04.2022',
+            to: 'FR 16.04.2022',
+        },
+        products: [
+            {
+                id: 'product-1',
+                name: 'Mid-season jacket - Skila - M',
+                image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&w=600&q=80',
+                price: 26.8,
+                options: { color: 'Red', size: 'M' },
+                deliveryTime: '1-3 working days',
+                shippingCountry: 'Germany',
+                freeShippingFrom: 34,
+            },
+            {
+                id: 'product-2',
+                name: 'Autumn / Spring jacket - Esprit - XS',
+                image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80',
+                price: 42.9,
+                options: { color: 'Brown', size: 'XS' },
+                deliveryTime: '2-4 working days',
+                shippingCountry: 'Germany',
+                freeShippingFrom: 34,
+            },
+        ],
+    },
+    {
+        id: 'order-2',
+        status: 'reserved',
+        shop: {
+            name: 'TrendTraders',
+            location: '15B Calle Mayor',
+            workHours: 'MO - SA: 10AM - 7PM',
+        },
+        reservedTime: {
+            from: 'MON 12.04.2022',
+            to: 'WED 14.04.2022',
+        },
+        products: [
+            {
+                id: 'product-3',
+                name: 'Faux leather jacket - Zizzi - 44',
+                image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?auto=format&fit=crop&w=600&q=80',
+                price: 37.9,
+                options: { color: 'Grey', size: '44' },
+                deliveryTime: '1-3 working days',
+                shippingCountry: 'Germany',
+                freeShippingFrom: 34,
+            },
+            {
+                id: 'product-4',
+                name: 'Outdoor jacket - Torstai - 46',
+                image: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=600&q=80',
+                price: 22.9,
+                options: { color: 'Brown', size: '46' },
+                deliveryTime: '3-5 working days',
+                shippingCountry: 'Germany',
+                freeShippingFrom: 34,
+            },
+            {
+                id: 'product-5',
+                name: 'Bright windbreaker - Torstai - M',
+                image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80',
+                price: 29.5,
+                options: { color: 'Blue', size: 'M' },
+                deliveryTime: '1-3 working days',
+                shippingCountry: 'Germany',
+                freeShippingFrom: 34,
+            },
+        ],
+    },
+    {
+        id: 'order-3',
+        status: 'purchased',
+        shop: {
+            name: 'Eco Wear',
+            location: '8C Plaza Central',
+            workHours: 'TU - SA: 11AM - 6PM',
+        },
+        products: [
+            {
+                id: 'product-6',
+                name: 'Vintage denim jacket - Levi\'s - L',
+                image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93b0?auto=format&fit=crop&w=600&q=80',
+                price: 45.0,
+                options: { color: 'Blue', size: 'L' },
+                deliveryTime: 'Delivered',
+                shippingCountry: 'Germany',
+                freeShippingFrom: 34,
+            },
+            {
+                id: 'product-7',
+                name: 'Wool coat - H&M - S',
+                image: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=600&q=80',
+                price: 58.5,
+                options: { color: 'Black', size: 'S' },
+                deliveryTime: 'Delivered',
+                shippingCountry: 'Germany',
+                freeShippingFrom: 34,
+            },
+        ],
+    },
+];
