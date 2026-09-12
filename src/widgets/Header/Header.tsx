@@ -77,13 +77,18 @@ export const Header = () => {
                     </Button>
 
                     <Button
+                        asChild
                         variant={BUTTON_STYLE.GHOST}
                         size={BUTTON_SIZE.DEFAULT}
                         aria-label='Cart'
-                        className='gap-xs'
                     >
-                        <ShoppingBagIcon className='h-5 w-5 stroke-white stroke-2' />
-                        <span className='text-sm font-semibold'>{cartCount}</span>
+                        <Link
+                            to='/cart'
+                            className='flex items-center gap-xs text-white no-underline hover:no-underline'
+                        >
+                            <ShoppingBagIcon className='h-5 w-5 stroke-white stroke-2' />
+                            <span className='text-sm font-semibold'>{cartCount}</span>
+                        </Link>
                     </Button>
 
                     <Button

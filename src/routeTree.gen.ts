@@ -13,6 +13,7 @@ import { Route as SplatRouteImport } from './routes/$'
 import { Route as ShopRouteImport } from './routes/_shop'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ShopIndexRouteImport } from './routes/_shop/index'
+import { Route as ShopCartRouteImport } from './routes/_shop/cart'
 
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
@@ -33,15 +34,22 @@ const ShopIndexRoute = ShopIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ShopRoute,
 } as any)
+const ShopCartRoute = ShopCartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => ShopRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/$': typeof SplatRoute
   '/': typeof ShopIndexRoute
   '/auth': typeof AuthRoute
+  '/cart': typeof ShopCartRoute
 }
 export interface FileRoutesByTo {
   '/$': typeof SplatRoute
   '/auth': typeof AuthRoute
+  '/cart': typeof ShopCartRoute
   '/': typeof ShopIndexRoute
 }
 export interface FileRoutesById {
@@ -49,14 +57,15 @@ export interface FileRoutesById {
   '/$': typeof SplatRoute
   '/_shop': typeof ShopRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_shop/cart': typeof ShopCartRoute
   '/_shop/': typeof ShopIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/$' | '/' | '/auth'
+  fullPaths: '/$' | '/' | '/auth' | '/cart'
   fileRoutesByTo: FileRoutesByTo
-  to: '/$' | '/auth' | '/'
-  id: '__root__' | '/$' | '/_shop' | '/auth' | '/_shop/'
+  to: '/$' | '/auth' | '/cart' | '/'
+  id: '__root__' | '/$' | '/_shop' | '/auth' | '/_shop/cart' | '/_shop/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -95,14 +104,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopIndexRouteImport
       parentRoute: typeof ShopRoute
     }
+    '/_shop/cart': {
+      id: '/_shop/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof ShopCartRouteImport
+      parentRoute: typeof ShopRoute
+    }
   }
 }
 
 interface ShopRouteChildren {
+  ShopCartRoute: typeof ShopCartRoute
   ShopIndexRoute: typeof ShopIndexRoute
 }
 
 const ShopRouteChildren: ShopRouteChildren = {
+  ShopCartRoute: ShopCartRoute,
   ShopIndexRoute: ShopIndexRoute,
 }
 
