@@ -26,3 +26,4 @@ dist-ssr
 *.sw?
 
 /info
+/seed/firebase-service-account.json

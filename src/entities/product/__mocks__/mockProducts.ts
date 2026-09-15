@@ -2,7 +2,7 @@ import type { Product } from '../types/product.types';
 
 export const mockProducts: Product[] = [
     {
-        id: 1,
+        id: '1',
         title: 'Autumn / Spring jacket - Esprit - XS',
         description:
             'Stylish autumn/spring jacket from Esprit. Lightweight yet warm, perfect for transitional weather. Features a classic cut with practical pockets.',
@@ -28,7 +28,7 @@ export const mockProducts: Product[] = [
         ],
     },
     {
-        id: 2,
+        id: '2',
         title: 'Autumn / Spring jacket - Other Brand - S',
         description:
             'Versatile jacket in excellent condition. Soft lining and durable outer fabric make it ideal for everyday wear.',
@@ -53,7 +53,7 @@ export const mockProducts: Product[] = [
         ],
     },
     {
-        id: 3,
+        id: '3',
         title: 'Faux leather jacket - Zizzi - 44',
         description:
             'Faux leather jacket with a sleek silhouette. Easy to style with both casual and dressy outfits.',
@@ -74,7 +74,7 @@ export const mockProducts: Product[] = [
         image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?auto=format&fit=crop&w=600&q=80',
     },
     {
-        id: 4,
+        id: '4',
         title: 'Outdoor jacket - Torstai - 46',
         description:
             'Outdoor jacket designed for active use. Water-resistant fabric and adjustable hood for unpredictable weather.',
@@ -95,7 +95,7 @@ export const mockProducts: Product[] = [
         image: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=600&q=80',
     },
     {
-        id: 5,
+        id: '5',
         title: 'Bright windbreaker - Torstai - M',
         description:
             'Eye-catching windbreaker in vibrant colors. Lightweight and packable — great for travel and outdoor activities.',
@@ -120,10 +120,10 @@ export const mockProducts: Product[] = [
         ],
     },
     {
-        id: 6,
+        id: '6',
         title: "Dark denim jacket - Levi's - L",
         description:
-            "Classic dark denim jacket with a timeless look. Durable cotton denim with a comfortable fit.",
+            'Classic dark denim jacket with a timeless look. Durable cotton denim with a comfortable fit.',
         price: 49.0,
         oldPrice: null,
         isNew: false,
@@ -141,7 +141,7 @@ export const mockProducts: Product[] = [
         image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80',
     },
     {
-        id: 7,
+        id: '7',
         title: 'Classic winter coat - Zara - S',
         description:
             'Warm winter coat with a tailored silhouette. Fully lined interior keeps you comfortable in cold weather.',
@@ -162,7 +162,7 @@ export const mockProducts: Product[] = [
         image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80',
     },
     {
-        id: 8,
+        id: '8',
         title: 'Vintage blue denim jacket - Wrangler - M',
         description:
             'Vintage-style blue denim jacket with authentic worn-in character. A staple piece for any wardrobe.',
@@ -183,7 +183,7 @@ export const mockProducts: Product[] = [
         image: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=600&q=80',
     },
     {
-        id: 9,
+        id: '9',
         title: "Leather Belt with Vintage Buckle - Levi's",
         description:
             'Genuine leather belt with a distinctive vintage buckle. Adds character to both casual and formal outfits.',
@@ -204,7 +204,7 @@ export const mockProducts: Product[] = [
         image: 'https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=600&q=80',
     },
     {
-        id: 10,
+        id: '10',
         title: 'Sport Run Sneakers - Nike - 37',
         description:
             'Lightweight running sneakers with cushioned sole. Ideal for jogging, gym, or everyday active wear.',
@@ -225,7 +225,7 @@ export const mockProducts: Product[] = [
         image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80',
     },
     {
-        id: 11,
+        id: '11',
         title: 'Casual Suede Boots - Torstai - 38',
         description:
             'Soft suede boots with a comfortable fit. Perfect for autumn and winter styling.',
@@ -246,7 +246,7 @@ export const mockProducts: Product[] = [
         image: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=600&q=80',
     },
     {
-        id: 12,
+        id: '12',
         title: 'Wool Beanie Hat - Columbia - One Size',
         description:
             'Cozy wool beanie hat for cold days. One size fits most. Soft and warm without being bulky.',

@@ -1,12 +1,23 @@
-import { doc, getDoc } from 'firebase/firestore';
+import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    limit,
+    orderBy,
+    query,
+    type QueryConstraint,
+    startAfter,
+    where,
+} from 'firebase/firestore';
 
 import { db } from '@/shared/config/firebase';
 
-import { mockProducts } from '../__mocks__/mockProducts';
 import type {
     PaginatedProductsResponse,
     Product,
     ProductFilters,
+    ProductPageCursor,
     SortOrder,
 } from '../types/product.types';
 
@@ -15,7 +26,7 @@ export const PAGE_SIZE = 4;
 function mapFirestoreProduct(id: string, data: Record<string, unknown>): Product {
     return {
         id,
-        title: String(data.title ?? data.name ?? ''),
+        title: String(data.title ?? ''),
         description: data.description ? String(data.description) : undefined,
         price: Number(data.price ?? 0),
         oldPrice: data.oldPrice != null ? Number(data.oldPrice) : null,
@@ -27,12 +38,8 @@ function mapFirestoreProduct(id: string, data: Record<string, unknown>): Product
         category: String(data.category ?? ''),
         subCategory: data.subCategory ? String(data.subCategory) : undefined,
         gender: Array.isArray(data.gender) ? (data.gender as Product['gender']) : undefined,
-        color: Array.isArray(data.color ?? data.colors)
-            ? ((data.color ?? data.colors) as string[]).map(String)
-            : undefined,
-        size: Array.isArray(data.size ?? data.sizes)
-            ? ((data.size ?? data.sizes) as string[]).map(String)
-            : undefined,
+        color: Array.isArray(data.color) ? (data.color as string[]).map(String) : undefined,
+        size: Array.isArray(data.size) ? (data.size as string[]).map(String) : undefined,
         brand: data.brand ? String(data.brand) : undefined,
         condition: data.condition as Product['condition'],
         shop: data.shop ? String(data.shop) : undefined,
@@ -40,121 +47,91 @@ function mapFirestoreProduct(id: string, data: Record<string, unknown>): Product
     };
 }
 
-function getMockProductById(productId: string): Product | null {
-    const product = mockProducts.find(item => String(item.id) === productId);
-    return product ?? null;
+function getFirestore(): NonNullable<typeof db> {
+    if (!db) {
+        throw new Error('Firestore is not configured');
+    }
+
+    return db;
 }
 
-export async function getProductById(productId: string): Promise<Product | null> {
+export async function getProductById(productId: string): Promise<Product> {
     if (!productId) {
-        return null;
+        throw new Error('Product id is required');
     }
 
-    if (!db) {
-        await new Promise(resolve => setTimeout(resolve, 300));
-        return getMockProductById(productId);
-    }
-
-    const snapshot = await getDoc(doc(db, 'products', productId));
+    const snapshot = await getDoc(doc(getFirestore(), 'products', productId));
 
     if (!snapshot.exists()) {
-        return null;
+        throw new Error('Product not found');
     }
 
     return mapFirestoreProduct(snapshot.id, snapshot.data() as Record<string, unknown>);
 }
 
 export async function fetchProductsPage({
-    pageParam = 1,
+    pageParam = null,
     filters = {},
     sort = null,
 }: {
-    pageParam?: number;
+    pageParam?: ProductPageCursor | null;
     filters?: ProductFilters;
     sort?: SortOrder;
 }): Promise<PaginatedProductsResponse> {
-    await new Promise(resolve => setTimeout(resolve, 300));
-
-    let filtered: Product[] = [...mockProducts];
+    const constraints: QueryConstraint[] = [];
 
     if (filters.category) {
-        filtered = filtered.filter(
-            p => p.category.toLowerCase() === filters.category?.toLowerCase()
-        );
+        constraints.push(where('category', '==', filters.category));
     }
 
     if (filters.subCategory) {
-        filtered = filtered.filter(
-            p => p.subCategory?.toLowerCase() === filters.subCategory?.toLowerCase()
-        );
+        constraints.push(where('subCategory', '==', filters.subCategory));
     }
 
     if (filters.gender) {
-        filtered = filtered.filter(p =>
-            p.gender?.some(g => g.toLowerCase() === filters.gender?.toLowerCase())
-        );
+        constraints.push(where('gender', 'array-contains', filters.gender));
     }
 
     if (filters.colors && filters.colors.length > 0) {
-        filtered = filtered.filter(p =>
-            p.color?.some(c => filters.colors?.some(fc => fc.toLowerCase() === c.toLowerCase()))
-        );
+        constraints.push(where('color', 'array-contains-any', filters.colors));
     }
 
     if (filters.sizes && filters.sizes.length > 0) {
-        filtered = filtered.filter(p =>
-            p.size?.some(s => filters.sizes?.some(fs => fs.toLowerCase() === s.toLowerCase()))
-        );
+        constraints.push(where('size', 'array-contains-any', filters.sizes));
     }
 
     if (filters.brands && filters.brands.length > 0) {
-        filtered = filtered.filter(p =>
-            filters.brands?.some(b => b.toLowerCase() === p.brand?.toLowerCase())
-        );
+        constraints.push(where('brand', 'in', filters.brands));
     }
 
     if (filters.conditions && filters.conditions.length > 0) {
-        filtered = filtered.filter(p =>
-            filters.conditions?.some(c => c.toLowerCase() === p.condition?.toLowerCase())
-        );
+        constraints.push(where('condition', 'in', filters.conditions));
     }
 
     if (filters.shops && filters.shops.length > 0) {
-        filtered = filtered.filter(p =>
-            filters.shops?.some(s => s.toLowerCase() === p.shop?.toLowerCase())
-        );
+        constraints.push(where('shop', 'in', filters.shops));
     }
 
-    if (filters.sale) {
-        filtered = filtered.filter(p => p.isSale || (p.oldPrice !== null && p.oldPrice > p.price));
+    if (filters.sale === true) {
+        constraints.push(where('isSale', '==', true));
     }
 
-    if (filters.search) {
-        const query = filters.search.toLowerCase().trim();
-        filtered = filtered.filter(
-            p =>
-                p.title.toLowerCase().includes(query) ||
-                p.brand?.toLowerCase().includes(query) ||
-                p.category.toLowerCase().includes(query)
-        );
+    const productsRef = collection(getFirestore(), 'products');
+    const priceDirection = sort === 'price_desc' ? 'desc' : 'asc';
+    constraints.push(orderBy('price', priceDirection));
+
+    if (pageParam) {
+        constraints.push(startAfter(pageParam));
     }
 
-    if (sort === 'price_asc') {
-        filtered.sort((a, b) => a.price - b.price);
-    } else if (sort === 'price_desc') {
-        filtered.sort((a, b) => b.price - a.price);
-    }
-
-    const totalCount = filtered.length;
-    const startIndex = (pageParam - 1) * PAGE_SIZE;
-    const endIndex = startIndex + PAGE_SIZE;
-    const items = filtered.slice(startIndex, endIndex);
-    const nextPage = endIndex < totalCount ? pageParam + 1 : null;
+    const snapshot = await getDocs(query(productsRef, ...constraints, limit(PAGE_SIZE)));
+    const items = snapshot.docs.map(document =>
+        mapFirestoreProduct(document.id, document.data() as Record<string, unknown>)
+    );
+    const nextCursor = snapshot.docs.length === PAGE_SIZE ? (snapshot.docs.at(-1) ?? null) : null;
 
     return {
         items,
-        nextPage,
-        totalCount,
+        nextCursor,
     };
 }
-

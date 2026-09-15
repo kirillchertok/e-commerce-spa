@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
-import type { OrderStatus } from '../types/order.types';
 import { fetchOrders } from './orders';
 
-export function useOrdersQuery(status: OrderStatus) {
+export function useOrdersQuery(userId?: string) {
     return useQuery({
-        queryKey: ['orders', status],
-        queryFn: () => fetchOrders(status),
+        queryKey: ['orders', userId],
+        queryFn: () => fetchOrders(userId ?? ''),
+        enabled: Boolean(userId),
     });
 }

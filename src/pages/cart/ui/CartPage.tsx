@@ -2,8 +2,8 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { useCreateOrderMutation } from '@/entities/order/api/useCreateOrderMutation';
 import { formatPrice } from '@/entities/product/lib/formatPrice';
-import { createOrderFromCart } from '@/features/orders/model/ordersSlice';
 import {
     selectCartItems,
     selectCartSubtotal,
@@ -24,8 +24,10 @@ export const CartPage = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const items = useAppSelector(selectCartItems);
+    const user = useAppSelector(state => state.auth.user);
     const totalQuantity = useAppSelector(selectCartTotalQuantity);
     const subtotal = useAppSelector(selectCartSubtotal);
+    const createOrderMutation = useCreateOrderMutation();
     const [shippingCountry, setShippingCountry] = useState('Germany');
     const [deliveryMethod, setDeliveryMethod] = useState('1-3 working days');
 
@@ -43,18 +45,18 @@ export const CartPage = () => {
 
     const total = subtotal + (items.length > 0 ? SHIPPING_COST : 0);
 
-    const handleCheckout = () => {
-        if (items.length === 0) {
+    const handleCheckout = async () => {
+        if (items.length === 0 || !user) {
             return;
         }
 
-        dispatch(
-            createOrderFromCart({
-                items,
-                shippingCountry,
-                deliveryMethod,
-            })
-        );
+        await createOrderMutation.mutateAsync({
+            items,
+            shippingCountry,
+            deliveryMethod,
+            userId: user.uid,
+        });
+
         dispatch(clearCart());
         navigate({ to: '/orders' });
     };
@@ -293,8 +295,9 @@ export const CartPage = () => {
                             size={BUTTON_SIZE.LARGE}
                             className='mt-lg w-full'
                             onClick={handleCheckout}
+                            disabled={createOrderMutation.isPending}
                         >
-                            Confirm order
+                            {createOrderMutation.isPending ? 'Processing...' : 'Confirm order'}
                         </Button>
                     </aside>
                 </div>

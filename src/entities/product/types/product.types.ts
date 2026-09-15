@@ -1,7 +1,9 @@
+import type { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+
 export type StockStatus = 'Out of Stock' | 'Low Stock' | 'In Stock';
 
 export interface Product {
-    id: number | string;
+    id: string;
     title: string;
     description?: string;
     price: number;
@@ -28,6 +30,8 @@ export type SortOrder = 'price_asc' | 'price_desc' | null;
 
 export type SortParam = 'asc' | 'desc';
 
+export type ProductPageCursor = QueryDocumentSnapshot<DocumentData>;
+
 export interface ProductFilters {
     gender?: GenderCategory;
     category?: string;
@@ -46,7 +50,5 @@ export interface ProductFilters {
 
 export interface PaginatedProductsResponse {
     items: Product[];
-    nextPage: number | null;
-    totalCount: number;
+    nextCursor: ProductPageCursor | null;
 }
-
