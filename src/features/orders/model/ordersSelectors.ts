@@ -1,5 +1,4 @@
-import type { RootState } from '@/app/store';
-import type { Order, OrderStatus } from '@/entities/order/types/order.types';
+import type { Order } from '@/entities/order/types/order.types';
 
 export const getEffectiveOrder = (order: Order, now = new Date()): Order => {
     if (
@@ -12,8 +11,3 @@ export const getEffectiveOrder = (order: Order, now = new Date()): Order => {
 
     return order;
 };
-
-export const selectOrdersByStatus = (state: RootState, status: OrderStatus) =>
-    state.orders.items
-        .map(order => getEffectiveOrder(order))
-        .filter(order => order.status === status);

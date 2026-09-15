@@ -155,6 +155,14 @@ export const ProductGrid = ({ className }: { className?: string }) => {
     }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
     const allProducts: Product[] = data?.pages.flatMap(page => page.items) || [];
+    const searchQuery = search.search?.trim().toLowerCase();
+    const visibleProducts = searchQuery
+        ? allProducts.filter(product =>
+              [product.title, product.brand, product.category].some(value =>
+                  value?.toLowerCase().includes(searchQuery)
+              )
+          )
+        : allProducts;
 
     if (isLoading) {
         return (
@@ -180,7 +188,7 @@ export const ProductGrid = ({ className }: { className?: string }) => {
         );
     }
 
-    if (allProducts.length === 0) {
+    if (visibleProducts.length === 0) {
         return (
             <div className='flex flex-col items-center justify-center rounded-lg border border-dashed border-matte-steel bg-white/50 py-xl text-center'>
                 <p className='text-lg font-medium text-dark-charcoal'>
@@ -196,7 +204,7 @@ export const ProductGrid = ({ className }: { className?: string }) => {
     return (
         <div className={cn('flex flex-col gap-lg', className)}>
             <div className={GRID_COLUMNS_CLASS}>
-                {allProducts.map(product => (
+                {visibleProducts.map(product => (
                     <ProductCard
                         key={product.id}
                         product={product}
