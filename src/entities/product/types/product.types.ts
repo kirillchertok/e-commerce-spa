@@ -1,11 +1,16 @@
+export type StockStatus = 'Out of Stock' | 'Low Stock' | 'In Stock';
+
 export interface Product {
     id: number | string;
     title: string;
+    description?: string;
     price: number;
     oldPrice: number | null;
     isNew?: boolean;
     isReserved?: boolean;
     image: string;
+    images?: string[];
+    stock: number;
     category: string;
     subCategory?: string;
     gender?: GenderCategory[];

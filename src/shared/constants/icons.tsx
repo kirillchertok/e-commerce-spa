@@ -2,6 +2,7 @@ import {
     FiChevronDown,
     FiChevronRight,
     FiChevronUp,
+    FiClipboard,
     FiHeart,
     FiSearch,
     FiShoppingBag,
@@ -16,6 +17,7 @@ export const HeartOutlineIcon = FiHeart;
 export const HeartFilledIcon = IoHeart;
 export const ShoppingBagIcon = FiShoppingBag;
 export const UserIcon = FiUser;
+export const OrdersIcon = FiClipboard;
 export const ChevronDownIcon = FiChevronDown;
 export const ChevronUpIcon = FiChevronUp;
 export const ChevronRightIcon = FiChevronRight;

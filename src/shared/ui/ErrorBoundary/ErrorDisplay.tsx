@@ -1,5 +1,7 @@
 import { useNavigate } from '@tanstack/react-router';
 
+import { Button, BUTTON_SIZE, BUTTON_STYLE } from '@/shared/ui/Button/Button';
+
 interface ErrorDisplayProps {
     title: string;
     message?: string;
@@ -7,17 +9,20 @@ interface ErrorDisplayProps {
 
 export function ErrorDisplay({ title, message }: ErrorDisplayProps) {
     const navigate = useNavigate();
+    const handleNavigateHome = () => navigate({ to: '/' });
 
     return (
         <main>
             <h1>{title}</h1>
             {message && <p>{message}</p>}
-            <button
+            <Button
                 type='button'
-                onClick={() => navigate({ to: '/' })}
+                variant={BUTTON_STYLE.FIRST}
+                size={BUTTON_SIZE.DEFAULT}
+                onClick={handleNavigateHome}
             >
                 На главную
-            </button>
+            </Button>
         </main>
     );
 }

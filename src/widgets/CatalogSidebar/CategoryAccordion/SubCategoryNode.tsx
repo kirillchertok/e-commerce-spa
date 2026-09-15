@@ -9,6 +9,10 @@ export const SubCategoryNode = ({ node, parentLabel, context }: SubCategoryNodeP
     const isExpanded = !!expandedCategories[node.id];
     const hasChildren = !!node.children?.length;
     const isSelected = category === parentLabel && subCategory === node.label;
+    const handleSelect = () => onSelect(parentLabel, node.label);
+    const handleSelectSubSub = (event: React.MouseEvent<HTMLButtonElement>) => {
+        onSelect(parentLabel, event.currentTarget.dataset.label ?? '');
+    };
 
     return (
         <div className='flex flex-col'>
@@ -17,7 +21,7 @@ export const SubCategoryNode = ({ node, parentLabel, context }: SubCategoryNodeP
                     label={node.label}
                     size='sm'
                     isSelected={isSelected}
-                    onClick={() => onSelect(parentLabel, node.label)}
+                    onClick={handleSelect}
                 />
                 {hasChildren && (
                     <CategoryChevron
@@ -36,7 +40,8 @@ export const SubCategoryNode = ({ node, parentLabel, context }: SubCategoryNodeP
                             key={subSub.id}
                             variant={BUTTON_STYLE.LINK}
                             size={BUTTON_SIZE.DEFAULT}
-                            onClick={() => onSelect(parentLabel, subSub.label)}
+                            onClick={handleSelectSubSub}
+                            data-label={subSub.label}
                             className={cn(
                                 'justify-start py-xs text-left text-sm text-muted-foreground hover:text-gemma',
                                 subCategory === subSub.label && 'font-semibold text-gemma'

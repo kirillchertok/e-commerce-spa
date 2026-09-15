@@ -1,5 +1,6 @@
 import type { OrderStatus } from '@/entities/order/types/order.types';
 import { cn } from '@/shared/lib/cn';
+import { Button, BUTTON_SIZE, BUTTON_STYLE } from '@/shared/ui/Button/Button';
 
 interface OrderTabsProps {
     activeTab: OrderStatus;
@@ -12,6 +13,10 @@ const TABS: { value: OrderStatus; label: string }[] = [
 ];
 
 export const OrderTabs = ({ activeTab, onTabChange }: OrderTabsProps) => {
+    const handleTabChange = (event: React.MouseEvent<HTMLButtonElement>) => {
+        onTabChange(event.currentTarget.dataset.tab as OrderStatus);
+    };
+
     return (
         <nav
             className='mb-lg flex justify-center gap-lg border-b border-gainsboro'
@@ -21,12 +26,15 @@ export const OrderTabs = ({ activeTab, onTabChange }: OrderTabsProps) => {
                 const isActive = activeTab === value;
 
                 return (
-                    <button
+                    <Button
                         key={value}
                         type='button'
+                        variant={BUTTON_STYLE.LINK}
+                        size={BUTTON_SIZE.DEFAULT}
                         role='tab'
                         aria-selected={isActive}
-                        onClick={() => onTabChange(value)}
+                        onClick={handleTabChange}
+                        data-tab={value}
                         className={cn(
                             'cursor-pointer px-sm pb-sm text-sm font-medium transition-colors',
                             isActive
@@ -35,7 +43,7 @@ export const OrderTabs = ({ activeTab, onTabChange }: OrderTabsProps) => {
                         )}
                     >
                         {label}
-                    </button>
+                    </Button>
                 );
             })}
         </nav>

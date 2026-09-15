@@ -35,21 +35,25 @@ interface CategoryChevronProps {
     onToggle: (id: string) => void;
 }
 
-const CategoryChevron = ({ id, label, isExpanded, onToggle }: CategoryChevronProps) => (
-    <Button
-        variant={BUTTON_STYLE.ICON}
-        size={BUTTON_SIZE.DEFAULT}
-        onClick={() => onToggle(id)}
-        aria-label={`Toggle ${label}`}
-        className='border-0 text-matte-steel hover:text-dark-charcoal'
-    >
-        {isExpanded ? (
-            <ChevronUpIcon className='h-4 w-4' />
-        ) : (
-            <ChevronDownIcon className='h-4 w-4' />
-        )}
-    </Button>
-);
+const CategoryChevron = ({ id, label, isExpanded, onToggle }: CategoryChevronProps) => {
+    const handleToggle = () => onToggle(id);
+
+    return (
+        <Button
+            variant={BUTTON_STYLE.ICON}
+            size={BUTTON_SIZE.DEFAULT}
+            onClick={handleToggle}
+            aria-label={`Toggle ${label}`}
+            className='border-0 text-matte-steel hover:text-dark-charcoal'
+        >
+            {isExpanded ? (
+                <ChevronUpIcon className='h-4 w-4' />
+            ) : (
+                <ChevronDownIcon className='h-4 w-4' />
+            )}
+        </Button>
+    );
+};
 export { CategoryChevron };
 
 export const CategoryNode = ({ node, context }: CategoryNodeProps) => {
@@ -57,6 +61,7 @@ export const CategoryNode = ({ node, context }: CategoryNodeProps) => {
     const isExpanded = !!expandedCategories[node.id];
     const hasChildren = !!node.children?.length;
     const isSelected = category === node.label && !subCategory;
+    const handleSelect = () => onSelect(node.label);
 
     return (
         <div className='flex flex-col'>
@@ -64,7 +69,7 @@ export const CategoryNode = ({ node, context }: CategoryNodeProps) => {
                 <CategoryLabel
                     label={node.label}
                     isSelected={isSelected}
-                    onClick={() => onSelect(node.label)}
+                    onClick={handleSelect}
                 />
                 {hasChildren ? (
                     <CategoryChevron
@@ -93,4 +98,3 @@ export const CategoryNode = ({ node, context }: CategoryNodeProps) => {
         </div>
     );
 };
-

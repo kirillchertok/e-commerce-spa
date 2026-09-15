@@ -1,3 +1,4 @@
+export { DIALOG_SIZE } from './cva';
 export {
     Dialog,
     DialogClose,

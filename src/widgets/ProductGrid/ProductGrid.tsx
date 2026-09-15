@@ -1,5 +1,5 @@
 import { useSearch } from '@tanstack/react-router';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { useInfiniteProducts } from '@/entities/product/api/useInfiniteProducts';
@@ -11,7 +11,9 @@ import type {
 import { ProductCard } from '@/entities/product/ui/ProductCard';
 import type { CatalogSearchParams } from '@/features/catalog-filters/model/searchParams';
 import { SORT_DESC } from '@/features/catalog-filters/model/searchParams';
-import { toggleCartItem } from '@/features/product-cart/model/cartSlice';
+import { selectCartItems } from '@/features/product-cart/model/cartSelectors';
+import { addItem, getCartLineId, removeItem } from '@/features/product-cart/model/cartSlice';
+import { ProductOptionsDialog } from '@/features/product-cart/ui/ProductOptionsDialog';
 import { toggleFavorite } from '@/features/product-favorites/model/favoritesSlice';
 import { cn } from '@/shared/lib/cn';
 import { Button, BUTTON_SIZE, BUTTON_STYLE } from '@/shared/ui/Button/Button';
@@ -20,8 +22,9 @@ const GRID_COLUMNS_CLASS = 'grid grid-cols-1 gap-md sm:grid-cols-2 md:grid-cols-
 
 export const ProductGrid = ({ className }: { className?: string }) => {
     const dispatch = useAppDispatch();
-    const cartItems = useAppSelector(state => state.cart.items);
+    const cartItems = useAppSelector(selectCartItems);
     const favoriteIds = useAppSelector(state => state.favorites.favoriteIds);
+    const [optionsProduct, setOptionsProduct] = useState<Product | null>(null);
 
     const search = useSearch({ strict: false }) as CatalogSearchParams;
 
@@ -50,10 +53,66 @@ export const ProductGrid = ({ className }: { className?: string }) => {
     }, [fetchNextPage]);
 
     const handleAddToCart = useCallback(
-        (productId: number | string) => {
-            dispatch(toggleCartItem(productId));
+        (product: Product) => {
+            if (product.stock <= 0) {
+                return;
+            }
+
+            if (product.size?.length || (product.color && product.color.length > 1)) {
+                setOptionsProduct(product);
+                return;
+            }
+
+            const lineId = getCartLineId(product.id);
+            const isInCart = cartItems.some(item => item.lineId === lineId);
+            if (isInCart) {
+                dispatch(removeItem(lineId));
+                return;
+            }
+
+            dispatch(
+                addItem({
+                    id: product.id,
+                    title: product.title,
+                    image: product.image,
+                    price: product.price,
+                    quantity: 1,
+                    stock: product.stock,
+                })
+            );
         },
-        [dispatch]
+        [cartItems, dispatch]
+    );
+
+    const handleConfirmOptions = useCallback(
+        (size?: string, color?: string) => {
+            if (!optionsProduct) {
+                return;
+            }
+
+            const lineId = getCartLineId(optionsProduct.id, size, color);
+            const isInCart = cartItems.some(item => item.lineId === lineId);
+
+            if (isInCart) {
+                dispatch(removeItem(lineId));
+            } else {
+                dispatch(
+                    addItem({
+                        id: optionsProduct.id,
+                        title: optionsProduct.title,
+                        image: optionsProduct.image,
+                        price: optionsProduct.price,
+                        quantity: 1,
+                        stock: optionsProduct.stock,
+                        size,
+                        color,
+                    })
+                );
+            }
+
+            setOptionsProduct(null);
+        },
+        [cartItems, dispatch, optionsProduct]
     );
 
     const handleToggleFavorite = useCallback(
@@ -62,6 +121,12 @@ export const ProductGrid = ({ className }: { className?: string }) => {
         },
         [dispatch]
     );
+
+    const handleOptionsDialogChange = (open: boolean) => {
+        if (!open) {
+            setOptionsProduct(null);
+        }
+    };
 
     useEffect(() => {
         if (!hasNextPage || isFetchingNextPage) {
@@ -135,13 +200,22 @@ export const ProductGrid = ({ className }: { className?: string }) => {
                     <ProductCard
                         key={product.id}
                         product={product}
-                        isInCart={cartItems.some(item => item.id === product.id)}
+                        isInCart={cartItems.some(item => item.productId === String(product.id))}
                         isFavorite={favoriteIds.includes(product.id)}
-                        onAddToCart={() => handleAddToCart(product.id)}
-                        onToggleFavorite={() => handleToggleFavorite(product.id)}
+                        onAddToCart={handleAddToCart}
+                        onToggleFavorite={handleToggleFavorite}
                     />
                 ))}
             </div>
+
+            {optionsProduct && (
+                <ProductOptionsDialog
+                    product={optionsProduct}
+                    open
+                    onOpenChange={handleOptionsDialogChange}
+                    onConfirm={handleConfirmOptions}
+                />
+            )}
 
             <div
                 ref={loadMoreRef}
@@ -168,4 +242,3 @@ export const ProductGrid = ({ className }: { className?: string }) => {
         </div>
     );
 };
-

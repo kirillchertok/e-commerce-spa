@@ -4,6 +4,8 @@ export const mockProducts: Product[] = [
     {
         id: 1,
         title: 'Autumn / Spring jacket - Esprit - XS',
+        description:
+            'Stylish autumn/spring jacket from Esprit. Lightweight yet warm, perfect for transitional weather. Features a classic cut with practical pockets.',
         price: 42.9,
         oldPrice: null,
         isNew: true,
@@ -17,11 +19,19 @@ export const mockProducts: Product[] = [
         condition: 'New',
         shop: 'Shop Vintage',
         isSale: false,
+        stock: 12,
         image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&w=600&q=80',
+        images: [
+            'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1520975954732-35dd22299614?auto=format&fit=crop&w=600&q=80',
+        ],
     },
     {
         id: 2,
         title: 'Autumn / Spring jacket - Other Brand - S',
+        description:
+            'Versatile jacket in excellent condition. Soft lining and durable outer fabric make it ideal for everyday wear.',
         price: 32.9,
         oldPrice: 42.9,
         isNew: true,
@@ -35,11 +45,18 @@ export const mockProducts: Product[] = [
         condition: 'New',
         shop: 'Second Look',
         isSale: true,
+        stock: 3,
         image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80',
+        images: [
+            'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=600&q=80',
+        ],
     },
     {
         id: 3,
         title: 'Faux leather jacket - Zizzi - 44',
+        description:
+            'Faux leather jacket with a sleek silhouette. Easy to style with both casual and dressy outfits.',
         price: 37.9,
         oldPrice: null,
         isNew: true,
@@ -53,11 +70,14 @@ export const mockProducts: Product[] = [
         condition: 'New',
         shop: 'Urban Thrift',
         isSale: false,
+        stock: 8,
         image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 4,
         title: 'Outdoor jacket - Torstai - 46',
+        description:
+            'Outdoor jacket designed for active use. Water-resistant fabric and adjustable hood for unpredictable weather.',
         price: 22.9,
         oldPrice: null,
         isNew: true,
@@ -71,11 +91,14 @@ export const mockProducts: Product[] = [
         condition: 'New',
         shop: 'Eco Wear',
         isSale: true,
+        stock: 0,
         image: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 5,
         title: 'Bright windbreaker - Torstai - M',
+        description:
+            'Eye-catching windbreaker in vibrant colors. Lightweight and packable — great for travel and outdoor activities.',
         price: 29.5,
         oldPrice: 38.0,
         isNew: true,
@@ -89,11 +112,18 @@ export const mockProducts: Product[] = [
         condition: 'Like New',
         shop: 'Second Look',
         isSale: true,
+        stock: 5,
         image: 'https://images.unsplash.com/photo-1578932750294-f5075e85f44a?auto=format&fit=crop&w=600&q=80',
+        images: [
+            'https://images.unsplash.com/photo-1578932750294-f5075e85f44a?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&w=600&q=80',
+        ],
     },
     {
         id: 6,
         title: "Dark denim jacket - Levi's - L",
+        description:
+            "Classic dark denim jacket with a timeless look. Durable cotton denim with a comfortable fit.",
         price: 49.0,
         oldPrice: null,
         isNew: false,
@@ -107,11 +137,14 @@ export const mockProducts: Product[] = [
         condition: 'Good',
         shop: 'Shop Vintage',
         isSale: false,
+        stock: 15,
         image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 7,
         title: 'Classic winter coat - Zara - S',
+        description:
+            'Warm winter coat with a tailored silhouette. Fully lined interior keeps you comfortable in cold weather.',
         price: 55.0,
         oldPrice: 70.0,
         isNew: false,
@@ -125,11 +158,14 @@ export const mockProducts: Product[] = [
         condition: 'Like New',
         shop: 'Urban Thrift',
         isSale: true,
+        stock: 2,
         image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 8,
         title: 'Vintage blue denim jacket - Wrangler - M',
+        description:
+            'Vintage-style blue denim jacket with authentic worn-in character. A staple piece for any wardrobe.',
         price: 34.9,
         oldPrice: null,
         isNew: true,
@@ -143,11 +179,14 @@ export const mockProducts: Product[] = [
         condition: 'New',
         shop: 'Eco Wear',
         isSale: false,
+        stock: 10,
         image: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 9,
         title: "Leather Belt with Vintage Buckle - Levi's",
+        description:
+            'Genuine leather belt with a distinctive vintage buckle. Adds character to both casual and formal outfits.',
         price: 18.0,
         oldPrice: 24.0,
         isNew: true,
@@ -161,11 +200,14 @@ export const mockProducts: Product[] = [
         condition: 'New',
         shop: 'Shop Vintage',
         isSale: true,
+        stock: 20,
         image: 'https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 10,
         title: 'Sport Run Sneakers - Nike - 37',
+        description:
+            'Lightweight running sneakers with cushioned sole. Ideal for jogging, gym, or everyday active wear.',
         price: 64.9,
         oldPrice: null,
         isNew: false,
@@ -179,11 +221,14 @@ export const mockProducts: Product[] = [
         condition: 'Like New',
         shop: 'Eco Wear',
         isSale: false,
+        stock: 7,
         image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 11,
         title: 'Casual Suede Boots - Torstai - 38',
+        description:
+            'Soft suede boots with a comfortable fit. Perfect for autumn and winter styling.',
         price: 45.0,
         oldPrice: 60.0,
         isNew: true,
@@ -197,11 +242,14 @@ export const mockProducts: Product[] = [
         condition: 'New',
         shop: 'Second Look',
         isSale: true,
+        stock: 4,
         image: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 12,
         title: 'Wool Beanie Hat - Columbia - One Size',
+        description:
+            'Cozy wool beanie hat for cold days. One size fits most. Soft and warm without being bulky.',
         price: 14.5,
         oldPrice: null,
         isNew: true,
@@ -209,12 +257,13 @@ export const mockProducts: Product[] = [
         category: 'Accessories',
         subCategory: 'Hats',
         gender: ['Men', 'Children'],
-        color: ['Grey', 'White'],
+        color: ['Grey'],
         size: ['One Size'],
         brand: 'Columbia',
         condition: 'New',
         shop: 'Urban Thrift',
         isSale: false,
+        stock: 25,
         image: 'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?auto=format&fit=crop&w=600&q=80',
     },
 ];

@@ -5,6 +5,7 @@ export const BUTTON_STYLE = {
     ICON: 'icon',
     GHOST: 'ghost',
     FILTER: 'filter',
+    ADD_TO_CART: 'add-to-cart',
     SALE: 'sale',
     LINK: 'link',
 } as const;
@@ -28,6 +29,8 @@ export const buttonVariants = cva(
                     'text-white rounded-full hover:bg-white-transperant p-sm text-sm font-semibold',
                 [BUTTON_STYLE.FILTER]:
                     'bg-white border border-matte-steel rounded-full px-md py-sm text-sm font-semibold text-dark-charcoal hover:bg-matte-steel',
+                [BUTTON_STYLE.ADD_TO_CART]:
+                    'rounded-md bg-gemma p-md text-md font-semibold text-white hover:bg-girly-red disabled:cursor-not-allowed disabled:bg-gainsboro disabled:text-muted-foreground disabled:opacity-100',
                 [BUTTON_STYLE.SALE]:
                     'bg-soft-red text-white rounded-full px-md py-sm text-sm font-semibold hover:bg-girly-red',
                 [BUTTON_STYLE.LINK]:

@@ -2,6 +2,7 @@ import { ChevronDown } from 'lucide-react';
 
 import { formatPrice } from '@/entities/product/lib/formatPrice';
 import { cn } from '@/shared/lib/cn';
+import { Button, BUTTON_SIZE, BUTTON_STYLE } from '@/shared/ui/Button/Button';
 
 import type { OrderProduct } from '../types/order.types';
 
@@ -55,14 +56,16 @@ export const OrderProductCard = ({ product, className }: OrderProductCardProps) 
                 </div>
 
                 <div className='mt-xs flex flex-col gap-xs'>
-                    <button
+                    <Button
                         type='button'
+                        variant={BUTTON_STYLE.LINK}
+                        size={BUTTON_SIZE.DEFAULT}
                         className='flex w-fit items-center gap-xs text-sm text-dark-charcoal'
                         aria-label={`Shipping to ${product.shippingCountry}`}
                     >
                         <span>Shipping to {product.shippingCountry}</span>
                         <ChevronDown className='h-4 w-4' />
-                    </button>
+                    </Button>
                     <p className='text-sm text-muted-foreground'>
                         Free shipping from {formatPrice(product.freeShippingFrom)}
                     </p>
