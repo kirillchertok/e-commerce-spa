@@ -2,7 +2,14 @@ import { Link, useNavigate, useSearch } from '@tanstack/react-router';
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
-import { HeartFilledIcon, SearchIcon, ShoppingBagIcon, UserIcon } from '@/shared/constants/icons';
+import { selectCartTotalQuantity } from '@/features/product-cart/model/cartSelectors';
+import {
+    HeartFilledIcon,
+    OrdersIcon,
+    SearchIcon,
+    ShoppingBagIcon,
+    UserIcon,
+} from '@/shared/constants/icons';
 import { useDebouncedValue } from '@/shared/hooks/useDebouncedValue';
 import { Button, BUTTON_SIZE, BUTTON_STYLE } from '@/shared/ui/Button/Button';
 import { Input, INPUT_SIZE, INPUT_STYLE } from '@/shared/ui/Input/Input';
@@ -13,9 +20,7 @@ export const Header = () => {
     const navigate = useNavigate();
     const { search: searchParam } = useSearch({ strict: false }) as { search?: string };
     const favoritesCount = useAppSelector(state => state.favorites.favoriteIds.length);
-    const cartCount = useAppSelector(state =>
-        state.cart.items.reduce((sum, item) => sum + item.quantity, 0)
-    );
+    const cartCount = useAppSelector(selectCartTotalQuantity);
 
     const [searchInput, setSearchInput] = useState(searchParam ?? '');
     const debouncedSearch = useDebouncedValue(searchInput, SEARCH_DEBOUNCE_MS);
@@ -92,6 +97,21 @@ export const Header = () => {
                     </Button>
 
                     <Button
+                        asChild
+                        variant={BUTTON_STYLE.GHOST}
+                        size={BUTTON_SIZE.DEFAULT}
+                        aria-label='Orders'
+                        title='Orders'
+                    >
+                        <Link
+                            to='/orders'
+                            className='flex items-center text-white no-underline hover:no-underline'
+                        >
+                            <OrdersIcon className='h-5 w-5 stroke-white stroke-2' />
+                        </Link>
+                    </Button>
+
+                    <Button
                         variant={BUTTON_STYLE.GHOST}
                         size={BUTTON_SIZE.DEFAULT}
                         aria-label='User Profile'
@@ -115,4 +135,3 @@ export const Header = () => {
         </header>
     );
 };
-

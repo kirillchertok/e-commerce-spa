@@ -19,15 +19,19 @@ interface FilterOptionItemProps {
     onToggle: (value: string) => void;
 }
 
-const FilterOptionItem = ({ option, isChecked, onToggle }: FilterOptionItemProps) => (
-    <label className='flex cursor-pointer items-center gap-sm rounded-sm px-sm py-xs text-sm text-dark-charcoal hover:bg-matte-steel'>
-        <Checkbox
-            checked={isChecked}
-            onCheckedChange={() => onToggle(option.value)}
-        />
-        <span>{option.label}</span>
-    </label>
-);
+const FilterOptionItem = ({ option, isChecked, onToggle }: FilterOptionItemProps) => {
+    const handleToggle = () => onToggle(option.value);
+
+    return (
+        <label className='flex cursor-pointer items-center gap-sm rounded-sm px-sm py-xs text-sm text-dark-charcoal hover:bg-matte-steel'>
+            <Checkbox
+                checked={isChecked}
+                onCheckedChange={handleToggle}
+            />
+            <span>{option.label}</span>
+        </label>
+    );
+};
 
 export const FilterDropdown = ({
     title,
@@ -70,4 +74,3 @@ export const FilterDropdown = ({
         </div>
     );
 };
-

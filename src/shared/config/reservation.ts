@@ -1,0 +1,1 @@
+export const RESERVATION_DURATION_DAYS = 2;

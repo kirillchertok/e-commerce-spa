@@ -13,27 +13,31 @@ interface NavItemProps {
     onSelect: (category: GenderCategory) => void;
 }
 
-const NavItem = ({ label, isSelected, isLast, onSelect }: NavItemProps) => (
-    <div className='flex items-center'>
-        <Button
-            variant={BUTTON_STYLE.GHOST}
-            size={BUTTON_SIZE.DEFAULT}
-            onClick={() => onSelect(label)}
-            className={cn(
-                'rounded-full px-lg py-xs text-sm whitespace-nowrap text-dark-charcoal hover:bg-matte-steel',
-                isSelected && 'bg-matte-steel font-bold text-dark-charcoal'
+const NavItem = ({ label, isSelected, isLast, onSelect }: NavItemProps) => {
+    const handleSelect = () => onSelect(label);
+
+    return (
+        <div className='flex items-center'>
+            <Button
+                variant={BUTTON_STYLE.GHOST}
+                size={BUTTON_SIZE.DEFAULT}
+                onClick={handleSelect}
+                className={cn(
+                    'rounded-full px-lg py-xs text-sm whitespace-nowrap text-dark-charcoal hover:bg-matte-steel',
+                    isSelected && 'bg-matte-steel font-bold text-dark-charcoal'
+                )}
+            >
+                {label}
+            </Button>
+            {!isLast && (
+                <span
+                    className='mx-xs h-4 w-0.5 bg-matte-steel'
+                    aria-hidden='true'
+                />
             )}
-        >
-            {label}
-        </Button>
-        {!isLast && (
-            <span
-                className='mx-xs h-4 w-0.5 bg-matte-steel'
-                aria-hidden='true'
-            />
-        )}
-    </div>
-);
+        </div>
+    );
+};
 
 export const CategoryNavigation = () => {
     const navigate = useNavigate();
@@ -64,4 +68,3 @@ export const CategoryNavigation = () => {
         </section>
     );
 };
-

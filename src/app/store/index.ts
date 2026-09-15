@@ -28,7 +28,7 @@ const persistConfig = {
 
     // exports.default = _default;
     storage: storage.default,
-    whitelist: ['auth'],
+    whitelist: ['auth', 'cart', 'orders'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

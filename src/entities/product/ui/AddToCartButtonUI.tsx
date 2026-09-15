@@ -7,6 +7,7 @@ interface AddToCartButtonUIProps {
     onAddToCart: () => void;
     className?: string;
     isLoading?: boolean;
+    disabled?: boolean;
 }
 
 export const AddToCartButtonUI = ({
@@ -14,13 +15,19 @@ export const AddToCartButtonUI = ({
     onAddToCart,
     className,
     isLoading = false,
+    disabled = false,
 }: AddToCartButtonUIProps) => {
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+        onAddToCart();
+    };
+
     return (
         <Button
             variant={BUTTON_STYLE.GHOST}
             size={BUTTON_SIZE.DEFAULT}
-            onClick={onAddToCart}
-            disabled={isLoading}
+            onClick={handleClick}
+            disabled={isLoading || disabled}
             aria-label={isInCart ? 'Remove from cart' : 'Add to cart'}
             className={cn(
                 'p-0 text-dark-charcoal hover:bg-transparent hover:text-gemma',

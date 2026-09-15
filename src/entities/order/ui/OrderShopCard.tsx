@@ -14,18 +14,29 @@ const SHOP_INFO_FIELDS = [
     { label: 'Work hours', key: 'workHours' as const },
 ] as const;
 
+function formatReservedDate(value: string) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    return new Intl.DateTimeFormat('en-GB', {
+        weekday: 'short',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    })
+        .format(date)
+        .toUpperCase();
+}
+
 export const OrderShopCard = ({ order, className }: OrderShopCardProps) => {
     const reservedTimeValue = order.reservedTime
-        ? `${order.reservedTime.from} - ${order.reservedTime.to}`
+        ? `${formatReservedDate(order.reservedTime.from)} - ${formatReservedDate(order.reservedTime.to)}`
         : undefined;
 
     return (
-        <article
-            className={cn(
-                'overflow-hidden rounded-md bg-white shadow-xs',
-                className
-            )}
-        >
+        <article className={cn('overflow-hidden rounded-md bg-white shadow-xs', className)}>
             <div className='grid grid-cols-2 gap-md p-md md:grid-cols-4'>
                 {SHOP_INFO_FIELDS.map(({ label, key }) => (
                     <div

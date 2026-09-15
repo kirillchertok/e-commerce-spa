@@ -1,3 +1,5 @@
+import { Link } from '@tanstack/react-router';
+
 import { cn } from '@/shared/lib/cn';
 import { Badge } from '@/shared/ui/Badge';
 
@@ -11,8 +13,8 @@ interface ProductCardProps {
     product: Product;
     isInCart?: boolean;
     isFavorite?: boolean;
-    onAddToCart?: () => void;
-    onToggleFavorite?: () => void;
+    onAddToCart?: (product: Product) => void;
+    onToggleFavorite?: (productId: number | string) => void;
     className?: string;
 }
 
@@ -24,6 +26,10 @@ export const ProductCard = ({
     onToggleFavorite,
     className,
 }: ProductCardProps) => {
+    const productLinkParams = { productId: String(product.id) };
+    const handleAddToCart = () => onAddToCart?.(product);
+    const handleToggleFavorite = () => onToggleFavorite?.(product.id);
+
     return (
         <article
             className={cn(
@@ -31,18 +37,15 @@ export const ProductCard = ({
                 className
             )}
         >
-            <div className='relative w-full overflow-hidden'>
+            <Link
+                to='/products/$productId'
+                params={productLinkParams}
+                className='relative block w-full overflow-hidden'
+            >
                 <ProductImage
                     src={product.image}
                     alt={product.title}
                 />
-
-                {onToggleFavorite && (
-                    <FavoriteButtonUI
-                        isFavorite={isFavorite}
-                        onToggleFavorite={onToggleFavorite}
-                    />
-                )}
 
                 <div className='absolute bottom-sm left-sm z-10 flex flex-wrap gap-xs'>
                     {product.isNew && (
@@ -56,18 +59,32 @@ export const ProductCard = ({
                         </Badge>
                     )}
                 </div>
-            </div>
+            </Link>
+
+            {onToggleFavorite && (
+                <FavoriteButtonUI
+                    isFavorite={isFavorite}
+                    onToggleFavorite={handleToggleFavorite}
+                    className='z-20'
+                />
+            )}
 
             <div className='flex flex-1 flex-col justify-between p-md'>
-                <h3
-                    className='line-clamp-2 font-sans text-md font-normal text-dark-charcoal'
+                <Link
+                    to='/products/$productId'
+                    params={productLinkParams}
+                    className='line-clamp-2 font-sans text-md font-normal text-dark-charcoal hover:text-soft-red'
                     title={product.title}
                 >
                     {product.title}
-                </h3>
+                </Link>
 
                 <div className='mt-md flex items-center justify-between'>
-                    <div className='flex items-center gap-sm'>
+                    <Link
+                        to='/products/$productId'
+                        params={productLinkParams}
+                        className='flex items-center gap-sm'
+                    >
                         <span className='text-md font-semibold text-dark-charcoal'>
                             {formatPrice(product.price)}
                         </span>
@@ -76,12 +93,13 @@ export const ProductCard = ({
                                 {formatPrice(product.oldPrice)}
                             </span>
                         )}
-                    </div>
+                    </Link>
 
                     {onAddToCart && (
                         <AddToCartButtonUI
                             isInCart={isInCart}
-                            onAddToCart={onAddToCart}
+                            onAddToCart={handleAddToCart}
+                            disabled={product.stock <= 0}
                         />
                     )}
                 </div>
@@ -89,4 +107,3 @@ export const ProductCard = ({
         </article>
     );
 };
-
