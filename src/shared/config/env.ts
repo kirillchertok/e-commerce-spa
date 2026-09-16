@@ -10,6 +10,7 @@ interface FirebaseEnv {
 interface Env {
     firebase: FirebaseEnv;
     isFirebaseConfigured: boolean;
+    isFirebaseEnabled: boolean;
 }
 
 const firebaseEnv: FirebaseEnv = {
@@ -38,4 +39,5 @@ export function validateEnv(): void {
 export const env: Env = {
     firebase: firebaseEnv,
     isFirebaseConfigured: getMissingFirebaseKeys().length === 0,
+    isFirebaseEnabled: import.meta.env.VITE_USE_FIREBASE === 'true',
 };

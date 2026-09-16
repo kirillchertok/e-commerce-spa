@@ -28,7 +28,10 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "erasableSyntaxOnly": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     },
     "include": ["src"]
 }

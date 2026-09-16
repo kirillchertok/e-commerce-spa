@@ -1,6 +1,6 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router';
-import type { ReactNode } from 'react';
 
+import { AuthListener } from '@/features/auth/model/AuthListener';
 import { routeTree } from '@/routeTree.gen';
 
 import { QueryProvider } from './QueryProvider';
@@ -14,16 +14,13 @@ declare module '@tanstack/react-router' {
     }
 }
 
-interface AppProvidersProps {
-    children?: ReactNode;
-}
-
-export function AppProviders({ children }: AppProvidersProps) {
+export function AppProviders() {
     return (
         <StoreProvider>
             <QueryProvider>
-                <RouterProvider router={router} />
-                {children}
+                <AuthListener>
+                    <RouterProvider router={router} />
+                </AuthListener>
             </QueryProvider>
         </StoreProvider>
     );
