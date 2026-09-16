@@ -18,3 +18,8 @@ export interface AuthData {
 export type AuthTab = 'login' | 'register';
 
 export const DEFAULT_TAB: AuthTab = 'login';
+
+export interface AuthSearch {
+    tab: AuthTab;
+    redirect?: string;
+}

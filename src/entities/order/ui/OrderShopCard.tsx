@@ -62,7 +62,7 @@ export const OrderShopCard = ({ order, className }: OrderShopCardProps) => {
 
             <div className='border-b border-gainsboro' />
 
-            <div className='grid grid-cols-1 gap-lg p-md sm:grid-cols-2 lg:grid-cols-3'>
+            <div className='grid gap-lg p-md sm:grid-cols-1 lg:grid-cols-3'>
                 {order.products.map(product => (
                     <OrderProductCard
                         key={product.id}
