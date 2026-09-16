@@ -4,6 +4,8 @@ import {
     FiChevronUp,
     FiClipboard,
     FiHeart,
+    FiLogOut,
+    FiMessageCircle,
     FiSearch,
     FiShoppingBag,
     FiSliders,
@@ -17,7 +19,9 @@ export const HeartOutlineIcon = FiHeart;
 export const HeartFilledIcon = IoHeart;
 export const ShoppingBagIcon = FiShoppingBag;
 export const UserIcon = FiUser;
+export const LogoutIcon = FiLogOut;
 export const OrdersIcon = FiClipboard;
+export const ChatIcon = FiMessageCircle;
 export const ChevronDownIcon = FiChevronDown;
 export const ChevronUpIcon = FiChevronUp;
 export const ChevronRightIcon = FiChevronRight;

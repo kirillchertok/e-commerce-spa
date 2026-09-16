@@ -74,6 +74,17 @@ function mapShop(data: unknown): ShopInfo {
     };
 }
 
+function getDeliveryDate(): string {
+    const deliveryDate = new Date();
+    deliveryDate.setDate(deliveryDate.getDate() + 2);
+
+    return new Intl.DateTimeFormat('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    }).format(deliveryDate);
+}
+
 function mapFirestoreOrder(id: string, data: Record<string, unknown>): Order {
     const products = Array.isArray(data.products) ? data.products : data.items;
 
@@ -130,8 +141,10 @@ export async function createOrder({
             size?: string;
             color?: string;
             image?: string;
+            deliveryTime: string;
         }> = [];
         let total = 0;
+        let shopName = '2ND HAND MARKET';
 
         for (const item of items) {
             const productRef = doc(firestore, 'products', item.productId);
@@ -155,6 +168,7 @@ export async function createOrder({
             }
 
             total += productPrice * requestedQuantity;
+            shopName = String(productData.shop ?? shopName);
 
             snapshotItems.push({
                 productId: item.productId,
@@ -164,6 +178,7 @@ export async function createOrder({
                 size: item.size,
                 color: item.color,
                 image: String(productData.image ?? item.image),
+                deliveryTime: getDeliveryDate(),
             });
 
             transaction.update(productRef, {
@@ -185,6 +200,11 @@ export async function createOrder({
             shippingCountry,
             deliveryMethod,
             total,
+            shop: {
+                name: shopName,
+                location: 'Online order',
+                workHours: 'MO - FR: 9AM - 8PM',
+            },
             items: snapshotItems,
         });
 

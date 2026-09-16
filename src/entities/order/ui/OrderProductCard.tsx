@@ -13,8 +13,8 @@ interface OrderProductCardProps {
 
 export const OrderProductCard = ({ product, className }: OrderProductCardProps) => {
     return (
-        <div className={cn('flex gap-md', className)}>
-            <div className='relative h-40 w-32 shrink-0 overflow-hidden rounded-md bg-matte-steel sm:h-48 sm:w-36'>
+        <div className={cn('flex flex-col gap-md sm:flex-row', className)}>
+            <div className='relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-md bg-matte-steel sm:aspect-auto sm:h-48 sm:w-36'>
                 <img
                     src={product.image}
                     alt={product.name}

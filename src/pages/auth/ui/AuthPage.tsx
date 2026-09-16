@@ -8,7 +8,7 @@ export const AuthPage = () => {
 
     return (
         <main className='w-screen h-screen flex flex-row justify-center items-center'>
-            <section className='relative w-[25%] bg- border-sm border-gainsboro rounded-md p-lg flex flex-col items-start gap-sm'>
+            <section className='relative w-[90%] md:w-[70%] lg:w-[50%] xl:w-[25%] border-sm border-gainsboro rounded-md p-lg flex flex-col items-start gap-sm'>
                 <h1 className='text-2xl text-black'>{capitalize(tab)}</h1>
                 {tab === 'login' ? <LoginForm /> : <RegistrationForm />}
             </section>

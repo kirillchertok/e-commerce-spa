@@ -1,4 +1,4 @@
-import { useNavigate } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 
 import { CrossIcon } from '@/shared/constants/icons';
 import { Button } from '@/shared/ui/Button/Button';
@@ -10,8 +10,12 @@ import { Link } from '@/shared/ui/Link/Link';
 
 import { useLoginForm } from '../hooks/useLoginForm';
 
-export const LoginForm = () => {
-    const navigate = useNavigate();
+interface LoginFormProps {
+    redirect?: string;
+}
+
+export const LoginForm = ({ redirect }: LoginFormProps) => {
+    const router = useRouter();
 
     const { formData, errors, submitError, isLoading, handleChange, handleSubmit, handleReset } =
         useLoginForm();
@@ -20,7 +24,7 @@ export const LoginForm = () => {
         e.preventDefault();
 
         await handleSubmit(() => {
-            navigate({ to: '/' });
+            router.history.push(redirect || '/');
         });
     };
 

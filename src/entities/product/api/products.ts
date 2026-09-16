@@ -92,12 +92,15 @@ export async function fetchProductsPage({
         constraints.push(where('gender', 'array-contains', filters.gender));
     }
 
-    if (filters.colors && filters.colors.length > 0) {
-        constraints.push(where('color', 'array-contains-any', filters.colors));
-    }
+    const arrayFilter = filters.colors?.length ? 'color' : filters.sizes?.length ? 'size' : null;
+    const arrayFilterValues = filters.colors?.length
+        ? filters.colors
+        : filters.sizes?.length
+          ? filters.sizes
+          : undefined;
 
-    if (filters.sizes && filters.sizes.length > 0) {
-        constraints.push(where('size', 'array-contains-any', filters.sizes));
+    if (arrayFilter && arrayFilterValues) {
+        constraints.push(where(arrayFilter, 'array-contains-any', arrayFilterValues));
     }
 
     if (filters.brands && filters.brands.length > 0) {
@@ -125,9 +128,19 @@ export async function fetchProductsPage({
     }
 
     const snapshot = await getDocs(query(productsRef, ...constraints, limit(PAGE_SIZE)));
-    const items = snapshot.docs.map(document =>
-        mapFirestoreProduct(document.id, document.data() as Record<string, unknown>)
-    );
+    const items = snapshot.docs
+        .map(document =>
+            mapFirestoreProduct(document.id, document.data() as Record<string, unknown>)
+        )
+        .filter(product => {
+            const matchesColors =
+                !filters.colors?.length ||
+                product.color?.some(color => filters.colors?.includes(color));
+            const matchesSizes =
+                !filters.sizes?.length || product.size?.some(size => filters.sizes?.includes(size));
+
+            return matchesColors && matchesSizes;
+        });
     const nextCursor = snapshot.docs.length === PAGE_SIZE ? (snapshot.docs.at(-1) ?? null) : null;
 
     return {
