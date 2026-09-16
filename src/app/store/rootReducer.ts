@@ -1,7 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-const appReducer = (state: Record<string, never> = {}) => state;
+import { authReducer } from '@/features/auth/model/authSlice';
+import { cartReducer } from '@/features/product-cart/model/cartSlice';
+import { favoritesReducer } from '@/features/product-favorites/model/favoritesSlice';
 
 export const rootReducer = combineReducers({
-    app: appReducer,
+    auth: authReducer,
+    favorites: favoritesReducer,
+    cart: cartReducer,
 });

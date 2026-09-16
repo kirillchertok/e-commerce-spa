@@ -3,12 +3,15 @@ import { type Firestore, getFirestore } from 'firebase/firestore';
 
 import { env } from './env';
 
-let firebaseApp: FirebaseApp | null = null;
-let db: Firestore | null = null;
+let firebaseApp: FirebaseApp | undefined = undefined;
+let db: Firestore | undefined = undefined;
 
 if (env.isFirebaseConfigured) {
     firebaseApp = initializeApp(env.firebase);
-    db = getFirestore(firebaseApp);
+
+    if (env.isFirebaseEnabled) {
+        db = getFirestore(firebaseApp);
+    }
 }
 
 export { db, firebaseApp };
