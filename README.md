@@ -1,33 +1,39 @@
 # 2ND HAND MARKET
 
-SPA интернет-магазина винтажной одежды и товаров second hand на React, TypeScript и Vite.
+A SPA e-commerce app for vintage clothing and second-hand goods, built with **React**, **TypeScript**, and **Vite**.
 
-## Функциональность
+---
 
-- каталог товаров с фильтрацией, сортировкой и поиском;
-- страница деталей товара;
-- корзина и оформление заказа через транзакцию Firestore;
-- регистрация, вход и выход через Firebase Authentication;
-- список заказов пользователя;
-- избранные товары и состояние корзины в Redux Persist;
-- кеширование и загрузка серверных данных через TanStack Query;
-- приватные shop-маршруты с возвратом на исходную страницу после входа;
-- floating WebSocket echo chat на `wss://ws.ifelse.io`.
+## Features
 
-## Стек и зависимости
+- product catalog with filtering, sorting, and search;
+- product details page;
+- cart and checkout via Firestore transaction;
+- sign up, sign in, and sign out via Firebase Authentication;
+- user's order history;
+- favorite items and cart state persisted with Redux Persist;
+- caching and server data fetching via TanStack Query;
+- private shop routes with redirect back to the original page after sign-in;
+- floating WebSocket echo chat on `wss://ws.ifelse.io`.
 
-- React 19 и TypeScript;
-- Vite;
-- TanStack Router и TanStack Query;
-- Redux Toolkit, React Redux и Redux Persist;
-- Firebase Authentication и Cloud Firestore;
-- Tailwind CSS и Radix UI / shadcn-подход;
-- `react-icons` и `lucide-react` для иконок;
-- native WebSocket API для чата.
+---
 
-## Запуск
+## Stack and Dependencies
 
-Требуется Node.js 20+ и npm.
+- **React 19** and **TypeScript**;
+- **Vite**;
+- **TanStack Router** and **TanStack Query**;
+- **Redux Toolkit**, **React Redux**, and **Redux Persist**;
+- **Firebase Authentication** and **Cloud Firestore**;
+- **Tailwind CSS** and **Radix UI** / **shadcn** approach;
+- **react-icons** and **lucide-react** for icons;
+- native **WebSocket API** for the chat.
+
+---
+
+## Getting Started
+
+Requires **Node.js 20+** and **npm**.
 
 ```bash
 npm install
@@ -41,16 +47,18 @@ npm run build
 npm run preview
 ```
 
-Проверки качества:
+Quality checks:
 
 ```bash
 npm run lint
 npm run typecheck
 ```
 
-## Переменные окружения
+---
 
-Для работы Firebase создай `.env.local` и укажи:
+## Environment Variables
+
+To use Firebase, create `.env.local` and specify:
 
 ```env
 VITE_USE_FIREBASE=true
@@ -62,19 +70,30 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=...
 VITE_FIREBASE_APP_ID=...
 ```
 
-При `VITE_USE_FIREBASE=false` приложение использует локальный режим, если он поддерживается конкретным API-модулем. Данные для Firestore должны быть подготовлены отдельно, а правила доступа находятся в `firestore.rules`.
+> When `VITE_USE_FIREBASE=false`, the app runs in a local mode if supported by a specific API module. Firestore data must be prepared separately, and access rules live in `firestore.rules`.
 
-## Структура проекта
+---
 
-Проект организован по feature-sliced принципу:
+## Project Structure
 
-- `src/app` — layout, providers и store;
-- `src/entities` — доменные сущности товаров и заказов;
-- `src/features` — auth, cart, favorites, filters, sorting и chat;
-- `src/pages` — страницы маршрутов;
-- `src/widgets` — крупные композиционные блоки интерфейса;
-- `src/shared` — UI-компоненты, конфигурация, константы и утилиты.
+The project follows the **feature-sliced design** principle:
 
-## Деплой
+- `src/app` — layout, providers, and store;
+- `src/entities` — domain entities for products and orders;
+- `src/features` — auth, cart, favorites, filters, sorting, and chat;
+- `src/pages` — route pages;
+- `src/widgets` — large compositional UI blocks;
+- `src/shared` — UI components, configuration, constants, and utilities.
 
-Ссылка на деплой будет добавлена после публикации проекта.
+---
+
+## Deployment
+
+The deployment link will be added after the project is published.
+
+```
+https://e-commerce-spa-nu.vercel.app/
+```
+
+**Email:** `kirilka2005228@gmail.com`
+**Password:** `123kirill123`
